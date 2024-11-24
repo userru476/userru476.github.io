@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Документация Luau</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Luau syntax -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.min.css">
   <!-- Основная тема -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
   <!-- Улучшенная тема для кода -->
@@ -119,5 +121,12 @@
   <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  <!-- В конце body -->
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-lua.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-typescript.min.js"></script>
+  <script>
+    // Настройка подсветки Luau как Lua
+    Prism.languages.luau = Prism.languages.lua;
+  </script>
 </body>
 </html>
