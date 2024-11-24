@@ -2,27 +2,105 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Документация Luau</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Основная тема -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+  <!-- Улучшенная тема для кода -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism-tomorrow.min.css">
-  <link rel="icon" href="path/to/favicon.ico" type="image/x-icon">
-  <meta name="description" content="Документация для скриптов на Luau.">
-  <meta property="og:title" content="Документация Luau">
-  <meta property="og:description" content="Подробная документация по использованию скриптов на Luau.">
-  <meta property="og:image" content="https://static.wikia.nocookie.net/roblox/images/a/af/Luau.png/revision/latest/scale-to-width-down/180?cb=20221030170311&path-prefix=ru">
-  <meta property="og:url" content="https://github.com/userru476">
-  <meta name="twitter:card" content="summary_large_image">
+  <!-- Добавляем кастомные стили -->
+  <style>
+    :root {
+      --theme-color: #2196f3;
+      --sidebar-width: 300px;
+    }
+
+    .sidebar {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-right: 1px solid #eaecef;
+    }
+
+    .sidebar-nav > ul > li > a {
+      font-weight: 600;
+      color: #34495e;
+    }
+
+    .markdown-section {
+      max-width: 900px;
+      padding: 30px 45px;
+    }
+
+    .markdown-section code {
+      border-radius: 4px;
+    }
+
+    .markdown-section pre {
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .app-name-link img {
+      max-width: 150px;
+    }
+
+    .search {
+      margin-bottom: 20px;
+      padding: 6px;
+      border-radius: 4px;
+    }
+
+    .search input {
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+    }
+
+    /* Улучшенная типография */
+    .markdown-section h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .markdown-section h2 {
+      font-size: 1.8rem;
+      margin: 2rem 0 1rem;
+    }
+
+    .markdown-section p {
+      line-height: 1.7;
+      color: #34495e;
+    }
+  </style>
 </head>
 <body>
   <div id="app"></div>
   <script>
     window.$docsify = {
       name: 'Luau Script Docs',
-      repo: '',
+      repo: '', // Добавьте ссылку на ваш репозиторий
       loadSidebar: true,
-      subMaxLevel: 2,
-      search: 'auto',
+      subMaxLevel: 3,
+      auto2top: true,
+      search: {
+        maxAge: 86400000,
+        paths: 'auto',
+        placeholder: 'Поиск...',
+        noData: 'Результатов не найдено',
+        depth: 6,
+        hideOtherSidebarContent: false,
+      },
+      pagination: {
+        previousText: 'Предыдущая',
+        nextText: 'Следующая',
+        crossChapter: true,
+        crossChapterText: true,
+      },
+      copyCode: {
+        buttonText: 'Копировать',
+        errorText: 'Ошибка',
+        successText: 'Скопировано!'
+      },
       plugins: [
         function(hook, vm) {
           hook.doneEach(function() {
@@ -32,8 +110,14 @@
       ]
     };
   </script>
+  <!-- Основные скрипты -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/components/prism-lua.min.js"></script>
+  <!-- Дополнительные плагины -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
 </body>
 </html>
