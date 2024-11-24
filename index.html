@@ -4,74 +4,157 @@
   <meta charset="UTF-8">
   <title>Документация Luau</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Luau syntax -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.min.css">
-  <!-- Основная тема -->
+  <meta name="description" content="Документация по Luau скриптам">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  
+  <!-- Темы -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
-  <!-- Улучшенная тема для кода -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism-tomorrow.min.css">
-  <!-- Добавляем кастомные стили -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  
+  <!-- Кастомные стили -->
   <style>
     :root {
       --theme-color: #2196f3;
       --sidebar-width: 300px;
+      --heading-h1-color: #1a237e;
+      --heading-h2-color: #283593;
+      --code-block-bg: #2c3e50;
     }
 
+    /* Основные стили */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    /* Сайдбар */
     .sidebar {
       background-color: #f8f9fa;
       padding: 20px;
       border-right: 1px solid #eaecef;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.05);
     }
 
     .sidebar-nav > ul > li > a {
       font-weight: 600;
       color: #34495e;
+      transition: color 0.3s ease;
     }
 
+    .sidebar-nav > ul > li > a:hover {
+      color: var(--theme-color);
+    }
+
+    /* Основной контент */
     .markdown-section {
       max-width: 900px;
       padding: 30px 45px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin: 20px auto;
     }
 
+    /* Код */
     .markdown-section code {
       border-radius: 4px;
+      font-family: 'Fira Code', monospace;
     }
 
     .markdown-section pre {
       border-radius: 8px;
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+      padding: 1.5em;
+      background-color: var(--code-block-bg);
     }
 
-    .app-name-link img {
-      max-width: 150px;
+    .markdown-section pre > code {
+      font-size: 0.9em;
+      line-height: 1.6;
     }
 
+    /* Поиск */
     .search {
-      margin-bottom: 20px;
+      margin: 20px;
       padding: 6px;
       border-radius: 4px;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
 
     .search input {
       border-radius: 4px;
       border: 1px solid #ddd;
       padding: 8px 12px;
+      width: 100%;
+      transition: all 0.3s ease;
     }
 
-    /* Улучшенная типография */
+    .search input:focus {
+      border-color: var(--theme-color);
+      box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+    }
+
+    /* Типография */
     .markdown-section h1 {
       font-size: 2.2rem;
       margin-bottom: 1.5rem;
+      color: var(--heading-h1-color);
+      border-bottom: 2px solid #eaecef;
+      padding-bottom: 0.5rem;
     }
 
     .markdown-section h2 {
       font-size: 1.8rem;
       margin: 2rem 0 1rem;
+      color: var(--heading-h2-color);
     }
 
     .markdown-section p {
       line-height: 1.7;
       color: #34495e;
+      margin: 1em 0;
+    }
+
+    /* Ссылки */
+    .markdown-section a {
+      color: var(--theme-color);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+
+    .markdown-section a:hover {
+      border-bottom-color: var(--theme-color);
+    }
+
+    /* Таблицы */
+    .markdown-section table {
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .markdown-section tr:nth-child(2n) {
+      background-color: #f8f9fa;
+    }
+
+    /* Кнопка копирования кода */
+    .docsify-copy-code-button {
+      border-radius: 4px !important;
+      padding: 8px 16px !important;
+      font-size: 0.85em !important;
+    }
+
+    /* Адаптивность */
+    @media screen and (max-width: 768px) {
+      :root {
+        --sidebar-width: 250px;
+      }
+      
+      .markdown-section {
+        padding: 20px;
+        margin: 10px;
+      }
     }
   </style>
 </head>
@@ -80,7 +163,7 @@
   <script>
     window.$docsify = {
       name: 'Luau Script Docs',
-      repo: '', // Добавьте ссылку на ваш репозиторий
+      repo: '',
       loadSidebar: true,
       subMaxLevel: 3,
       auto2top: true,
@@ -103,8 +186,23 @@
         errorText: 'Ошибка',
         successText: 'Скопировано!'
       },
+      markdown: {
+        highlight: function (str, lang) {
+          if (lang === 'luau') {
+            lang = 'lua';
+          }
+          return Prism.highlight(str, Prism.languages[lang] || Prism.languages.plaintext, lang);
+        }
+      },
       plugins: [
         function(hook, vm) {
+          hook.beforeEach(function(content) {
+            const editUrl = 'https://github.com/YOUR_REPO/edit/main/docs/' + vm.route.file;
+            return content + '\n\n----\n' + 
+              'Последнее обновление: {docsify-updated} | ' +
+              '[Редактировать документ](' + editUrl + ')\n';
+          });
+          
           hook.doneEach(function() {
             Prism.highlightAll();
           });
@@ -112,21 +210,29 @@
       ]
     };
   </script>
-  <!-- Основные скрипты -->
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/components/prism-lua.min.js"></script>
-  <!-- Дополнительные плагины -->
+
+  <!-- Базовые скрипты -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  
+  <!-- Prism и языковые компоненты -->
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-lua.min.js"></script>
+  
+  <!-- Плагины -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
-  <!-- В конце body -->
-  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-lua.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-typescript.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+
   <script>
-    // Настройка подсветки Luau как Lua
-    Prism.languages.luau = Prism.languages.lua;
+    // Определяем Luau как расширение Lua
+    Prism.languages.luau = Prism.languages.extend('lua', {
+      'keyword': /\b(?:and|break|do|else|elseif|end|false|for|function|if|in|local|nil|not|or|repeat|return|then|true|until|while|continue|export|type)\b/,
+      'function': /\b(?:assert|collectgarbage|error|getfenv|getmetatable|ipairs|loadstring|next|pairs|pcall|print|rawequal|rawget|rawset|require|select|setfenv|setmetatable|tonumber|tostring|type|unpack|xpcall)\b/,
+      'operator': /\.\.|\<=|\>=|\~\=|[+\-*/%^#<>=]/,
+      'special': /\b(?:self)\b/
+    });
   </script>
 </body>
 </html>
